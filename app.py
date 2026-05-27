@@ -56,4 +56,5 @@ def generate():
 
 # Start the server when we run this file directly
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run(host="0.0.0.0", port=10000)
