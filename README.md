@@ -13,7 +13,8 @@
 Invoicely is a free, minimal invoice generator built for early-stage startups and founders. Stop wrestling with Google Docs or paying $20/month for a tool that does one thing. Fill in your details, add your line items, and get a beautiful PDF invoice in seconds.
 
 If you're a founder who sends invoices, this is for you.
-Try it → [Invoicely](YOUR_RENDER_URL_HERE)
+Try it → [Invoicely](https://invoicely-zm60.onrender.com/)
+
 ---
 
 ## 🌸 Features
