@@ -1,0 +1,245 @@
+<!-- templates/invoice.html -->
+<!-- This is the generated invoice page — what the user sees and prints as PDF -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{ data.invoice_num }}</title>
+    <style>
+        /* Self-contained styles — no external CSS needed for printing */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fdf6ee;
+            color: #3b2a22;
+            padding: 3rem;
+        }
+
+        /* Main invoice card */
+        .invoice {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #fffaf4;
+            border-radius: 20px;
+            border: 1px solid #e8d5c4;
+            padding: 3rem;
+        }
+
+        /* Top section: title left, meta right */
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e8d5c4;
+        }
+
+        .invoice-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #6b4c3b;
+        }
+
+        .invoice-meta {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #9e8275;
+            line-height: 1.8;
+        }
+
+        .invoice-meta strong {
+            color: #3b2a22;
+        }
+
+        /* From / To section */
+        .parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .party-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #c9727a;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .party-name {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .party-email {
+            font-size: 0.85rem;
+            color: #9e8275;
+        }
+
+        /* Line items table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        thead th {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #9e8275;
+            font-weight: 500;
+            padding: 0 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e8d5c4;
+        }
+
+        /* Right-align numeric columns */
+        thead th:nth-child(2),
+        thead th:nth-child(3),
+        thead th:nth-child(4) { text-align: right; }
+
+        tbody td {
+            padding: 0.9rem 0.5rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f2e4d8;
+        }
+
+        tbody td:nth-child(2),
+        tbody td:nth-child(3),
+        tbody td:nth-child(4) { text-align: right; }
+
+        /* Grand total row */
+        .total-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.2rem 0.5rem;
+            border-top: 2px solid #e8d5c4;
+            margin-bottom: 2.5rem;
+        }
+
+        .total-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #9e8275;
+        }
+
+        .total-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #c9727a;
+            font-weight: 600;
+        }
+
+        /* Print button — hidden when printing */
+        .print-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #c9727a, #a85560);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: none;
+            border: 1px solid #e8d5c4;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #9e8275;
+            cursor: pointer;
+        }
+
+        /* Hide buttons when printing */
+        @media print {
+            .print-btn, .back-btn { display: none; }
+            body { background: white; padding: 0; }
+            .invoice { border: none; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+
+        <!-- Top header: Invoicely brand + invoice number and dates -->
+        <div class="invoice-header">
+            <div class="invoice-title">⚡ Invoicely</div>
+            <div class="invoice-meta">
+                <!-- Jinja2 syntax — Flask fills these in from app.py -->
+                <div>Invoice <strong>#{{ data.invoice_num }}</strong></div>
+                <div>Issued <strong>{{ today }}</strong></div>
+                <div>Due <strong>{{ data.due_date }}</strong></div>
+            </div>
+        </div>
+
+        <!-- From / To parties -->
+        <div class="parties">
+            <div>
+                <div class="party-label">From</div>
+                <div class="party-name">{{ data.from_name }}</div>
+                <div class="party-email">{{ data.from_email }}</div>
+            </div>
+            <div>
+                <div class="party-label">To</div>
+                <div class="party-name">{{ data.to_name }}</div>
+                <div class="party-email">{{ data.to_email }}</div>
+            </div>
+        </div>
+
+        <!-- Line items table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Jinja2 for loop — loops over line_items passed from app.py -->
+                {% for item in line_items %}
+                <tr>
+                    <td>{{ item.desc }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>${{ "%.2f"|format(item.price) }}</td>
+                    <td>${{ "%.2f"|format(item.total) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Grand total -->
+        <div class="total-row">
+            <span class="total-label">Total Due</span>
+            <span class="total-amount">${{ "%.2f"|format(grand_total) }}</span>
+        </div>
+
+        <!-- Print button calls browser's built-in print dialog -->
+        <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+        <!-- Go back to the form to create another invoice -->
+        <button class="back-btn" onclick="window.location.href='/'">← Create Another Invoice</button>
+
+    </div>
+</body>
+</html>

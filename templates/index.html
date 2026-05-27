@@ -1,0 +1,107 @@
+<!-- templates/index.html-->
+ <!-- This is the main form page where users fill in the invoice details -->
+
+<!DOCTYPE html>
+<!-- Tells the browser this is modern HTML5 document-->
+<html lang = "en">
+<head>
+    <!-- UTF-8 supports all characters including symbols-->
+    <meta charset = "UTF-8">
+    <!-- Makes the page responsive on mobile screens -->
+     <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
+     <title> Invoicely - Clean Invoices for Startups </title>
+     <!-- url_for is a Flask helper that builds the correct path to our CSS file-->
+      <link rel = "stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}">
+</head>
+
+<body>
+    <!-- .container centers everything and limits max width -->
+    <div class = "container">
+
+        <!-- Hero header at the top of the page -->
+        <header>
+            <h1> Invoicely </h1>
+                <p> Clean invoices for Startups. No accounts. No subscriptions. </p>
+        </header>
+        
+        <!-- action = "/generate" sends this form to our /generate route in app.py-->
+        <!-- method = "POST" means data is sent in the request body, not the URL -->
+        
+        <form action = '/generate' method = "POST">
+
+            <!-- FROM / TO - two columsn side by side using CSS grid-->
+             <div class = "row">
+
+                <div class = "col">
+                    <h2> From </h2>
+                    <!-- name = "from_name" matches request.form.get("from_name") in app.py -->
+                    <input type = "text" name = "from_name" placeholder = "Your Name /  Company" required>
+                    <input type = "email" name = "from_email" placeholder = "your@email.com" required>
+                </div>
+
+                <!-- Right column : client details -->
+                <div class = "col">
+                    <h2> To </h2>
+                    <input type = 'text' name = 'to_name' placeholder = "Client Name / Company" required>
+                    <input type = 'email'  name = "to_email" placeholder = "client@email.com" required>
+                </div>
+            </div>
+
+            <!-- Invoice metadata - number and due date -->
+        
+            <div class="row">
+                <div class="col">
+                    <label>Invoice Number</label>
+                    <input type="text" name="invoice_num" placeholder="INV-001" required>
+                </div>
+                <div class="col">
+                    <label>Due Date</label>
+                    <input type="date" name="due_date" required>
+                </div>
+            </div>
+            
+
+            <!-- Line items table - each row is one service/product -->
+             <h2> Items </h2>
+             <table id = "items-table">
+                <thead>
+                    <tr>
+                        <th> Description </th>
+                        <th> Quantity </th>
+                        <th> Price ($) </th>
+                        <th> </th> 
+                    </tr>
+                </thead>
+
+            <tbody id = 'items-body'>
+                <!-- This first row is hardcoded - addRow() in main.js clones it-->
+                 <tr>
+                    <td><input type="text"   name="item_desc[]"  placeholder="Service or product" required></td>
+                        <!-- min="1" prevents negative quantities -->
+                        <td><input type="number" name="item_qty[]"   placeholder="1" min="1" required></td>
+                        <!-- step="0.01" allows cents like 99.99 -->
+                        <td><input type="number" name="item_price[]" placeholder="0.00" min="0" step="0.01" required></td>
+                        <!-- onclick="removeRow(this)" passes this button to the JS function -->
+                        <td><button type="button" class="remove-btn" onclick="removeRow(this)">✕</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Calls addRow() from main.js to insert a new table row -->
+            <button type="button" id="add-item" onclick="addRow()">+ Add Item</button>
+
+            <!-- type="submit" triggers the form POST to /generate -->
+            <button type="submit" id="generate-btn">Generate Invoice →</button>
+
+        </form>
+    </div>
+
+    <!-- JS loaded at the bottom so the HTML is ready before the script runs -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
+            
+
+
+

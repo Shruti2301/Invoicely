@@ -1,0 +1,248 @@
+/* static/css/style.css */
+/* Warm, clean, beautiful UI for Invoicely */
+
+/* Google Font — elegant serif + clean sans */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+/* ── Root variables — warm color palette ── */
+:root {
+    --cream:      #fdf6ee;
+    --warm-white: #fffaf4;
+    --blush:      #f2d4c2;
+    --rose:       #c9727a;
+    --rose-dark:  #a85560;
+    --brown:      #6b4c3b;
+    --text:       #3b2a22;
+    --muted:      #9e8275;
+    --border:     #e8d5c4;
+    --shadow:     rgba(107, 76, 59, 0.08);
+}
+
+/* ── Reset & base ── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+
+    /* Soft warm texture using radial gradients */
+    background-image:
+        radial-gradient(ellipse at 20% 20%, #fce8dc55 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, #f5d6c855 0%, transparent 60%);
+}
+
+/* ── Container ── */
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+}
+
+/* ── Header ── */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--brown);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+/* ── Form card ── */
+form {
+    background: var(--warm-white);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    box-shadow: 0 4px 40px var(--shadow);
+}
+
+/* ── Section headings ── */
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--brown);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+/* ── Row / col layout ── */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+}
+
+/* ── Inputs ── */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(201, 114, 122, 0.12);
+}
+
+input::placeholder {
+    color: #c5ab9e;
+}
+
+/* ── Divider between sections ── */
+form > h2 {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* ── Items table ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 0 0.5rem 0.75rem;
+    text-align: left;
+}
+
+tbody tr {
+    border-top: 1px solid var(--border);
+}
+
+tbody td {
+    padding: 0.6rem 0.5rem;
+}
+
+/* Make qty and price columns narrower */
+tbody td:nth-child(2) { width: 80px; }
+tbody td:nth-child(3) { width: 110px; }
+tbody td:nth-child(4) { width: 40px; }
+
+/* ── Remove row button ── */
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--blush);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 6px;
+    transition: color 0.2s;
+}
+
+.remove-btn:hover {
+    color: var(--rose);
+}
+
+/* ── Add item button ── */
+#add-item {
+    background: none;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 2rem;
+    display: block;
+    width: 100%;
+}
+
+#add-item:hover {
+    border-color: var(--rose);
+    color: var(--rose);
+    background: rgba(201, 114, 122, 0.04);
+}
+
+/* ── Generate button ── */
+#generate-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+#generate-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+#generate-btn:active {
+    transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    form {
+        padding: 1.5rem;
+    }
+}
